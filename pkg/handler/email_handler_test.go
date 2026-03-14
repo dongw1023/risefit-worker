@@ -72,6 +72,17 @@ func TestSendEmail(t *testing.T) {
 		t.Errorf("handler returned wrong status code for unauthorized: got %v want %v", status, http.StatusUnauthorized)
 	}
 
+	// Test Cloud Tasks Authentication (X-CloudTasks-QueueName)
+	req, _ = http.NewRequest(http.MethodPost, "/send-email", bytes.NewBuffer(body))
+	req.Header.Set("X-CloudTasks-QueueName", "test-queue")
+	rr = httptest.NewRecorder()
+
+	r.ServeHTTP(rr, req)
+
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code for cloud task: got %v want %v", status, http.StatusOK)
+	}
+
 	// Test Invalid Email
 	payload.Email = "invalid-email"
 	body, _ = json.Marshal(payload)

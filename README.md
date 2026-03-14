@@ -5,7 +5,7 @@ A microservice for rendering and delivering transactional emails, triggered by t
 ## Features
 - **Framework**: Gin (Web) + Google Wire (Dependency Injection).
 - **Endpoint**: `POST /send-email`
-- **Authentication**: `X-Internal-API-Key` header validation.
+- **Authentication**: Supports both `X-Internal-API-Key` and native Google Cloud Tasks headers.
 - **Templates**: `verify_email`, `reset_password`.
 - **ESP**: SendGrid (configurable).
 - **Retries**: Returns `5xx` for transient failures, enabling Cloud Tasks retries.

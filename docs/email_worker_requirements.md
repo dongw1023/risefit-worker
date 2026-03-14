@@ -33,7 +33,7 @@ The service must support the following templates at launch:
 - **Email SDK**: Use the official SDK of the chosen ESP (e.g., `@sendgrid/mail`).
 
 ### 2.2 Security
-- **Authentication**: Every request must be validated using the `X-Internal-API-Key` header. Requests without a valid key must return `401 Unauthorized`.
+- **Authentication**: Every request must be validated using either the `X-Internal-API-Key` header or by confirming the request is from Google Cloud Tasks via the `X-CloudTasks-QueueName` header. Requests without a valid key must return `401 Unauthorized`.
 - **Validation**: Validate that the `email` field is a valid email address and all required fields for the specific `template` are present in the `data` object.
 
 ### 2.3 Error Handling & Retries
