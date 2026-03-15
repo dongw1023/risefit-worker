@@ -25,6 +25,12 @@ func (p *SendGridProvider) Send(ctx context.Context, to, subject, htmlContent st
 	toEmail := mail.NewEmail("", to)
 	message := mail.NewSingleEmail(from, subject, toEmail, "", htmlContent)
 
+	trackingSettings := mail.NewTrackingSettings()
+	clickTracking := mail.NewClickTrackingSetting()
+	clickTracking.SetEnable(false)
+	trackingSettings.SetClickTracking(clickTracking)
+	message.SetTrackingSettings(trackingSettings)
+
 	response, err := p.client.SendWithContext(ctx, message)
 	if err != nil {
 		return fmt.Errorf("failed to send email via SendGrid: %w", err)
